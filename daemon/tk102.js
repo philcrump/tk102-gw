@@ -172,7 +172,7 @@ tk102.fixGeo = function( one, two ) {
 	var one = degrees + (minutes / 60)
 
 	var one = parseFloat( (two == 'S' || two == 'W' ? '-' : '') + one )
-	return Math.round( one * 10000 ) / 1000000
+	return Math.round( one * 1000000 ) / 1000000
 }
 
 // ready
