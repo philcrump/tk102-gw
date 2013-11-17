@@ -33,8 +33,6 @@ tk102.on('track', function(gps) {
         nuData['speed'] = gps.speed.mph;
         nuData['raw'] = gps.raw;
         
-        console.log(nuData);
-        
         dbPool.getConnection(function(err, connection) {
                 if (err) throw err;
                 connection.query('INSERT INTO positions SET ?', nuData, function(err, rows, fields) {
