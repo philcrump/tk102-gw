@@ -118,47 +118,38 @@ tk102.createServer = function( vars ) {
 tk102.parse = function( raw ) {
 	
 	// 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
+	// #353588020145956##1#0000#AUT#01#2340104bb6374c#00000.0000,E,0000.0000,N,0.00,0.00#000000#000000.000##".
+	// #353588020145956##1#0000#AUT#01#2340104bb6374c#123.854500,W,5056.346600,N,0.00,0.00#171113#205016.000##
 	var raw = raw.trim()
 	var str = raw.split('#')
 	var data = false
 	
 	// only continue with correct input, else the server may quit...
-	if( str.length == 18 && str[2] == 'GPRMC' ) {
+	if( str.length == 13) {
 		
 		// parse
-		var datetime = str[0].replace( /([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, year, month, day, hour, minute ) {
-			return '20'+ year +'-'+ month +'-'+ day +' '+ hour +':'+ minute
-		})
-		
-		var gpsdate = str[11].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
+		var datetime = str[9].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
 			return '20'+ year +'-'+ month +'-'+ day
+		})+" "+str[10].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
+			return hour +':'+ minute +':'+ second
 		})
 		
-		var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
-			return hour +':'+ minute +':'+ second +'.'+ ms
-		})
+		var gpsPieces = str[8].split(',')
 		
 		data = {
 			'raw':		raw,
 			'datetime':	datetime,
-			'phone':	str[1],
-			'gps': {
-				'date':		gpsdate,
-				'time':		gpstime,
-				'signal':	str[15] == 'F' ? 'full' : 'low',
-				'fix':		str[4] == 'A' ? 'active' : 'invalid'
-			},
 			'geo': {
-				'latitude':	tk102.fixGeo( str[5], str[6] ),
-				'longitude':	tk102.fixGeo( str[7], str[8] ),
-				'bearing':		parseInt( str[10] )
+				'latitude':	tk102.fixGeo( gpsPieces[2], gpsPieces[3] ),
+				'longitude':	tk102.fixGeo( gpsPieces[0], gpsPieces[1] ),
+				'bearing':		parseInt( gpsPieces[5] )
 			},
 			'speed': {
-				'knots':	Math.round( str[9] * 1000 ) / 1000,
-				'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
-				'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000
+				'knots':	Math.round( gpsPieces[4] * 1000 ) / 1000,
+				'kmh':		Math.round( gpsPieces[4] * 1.852 * 1000 ) / 1000,
+				'mph':		Math.round( gpsPieces[4] * 1.151 * 1000 ) / 1000
 			},
-			'imei':		str[16].replace( 'imei:', '' )
+			'imei':		str[1]
 		}
 	}
 	
