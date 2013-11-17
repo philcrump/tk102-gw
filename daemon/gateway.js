@@ -60,6 +60,7 @@ tk102.on('track', function(gps) {
                             connection.release();
                     });
             });
+        }
 });
  
 console.log("\nTK102 TCP Gateway now running on port "+portNum);
