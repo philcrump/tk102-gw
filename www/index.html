@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jailbreak Tracker</title>
+    <style>
+        body {
+                padding: 0;
+                margin: 0;
+        }
+        html, body, #map {
+                height: 100%;
+        }
+        .box {
+                 position: absolute; 
+                 background-color: white; 
+                 border: 1px solid #0070a3; 
+                 padding: 0.5em;
+                 background-attachment:initial;
+                 background-clip:initial;
+                 background-color:rgb(255, 255, 255);
+                 background-color:rgba(255, 255, 255, 0.85);
+                 background-image:initial;
+                 background-origin:initial;
+                 background-position:initial initial;
+                 background-repeat:initial initial;
+        }
+        #box-status {
+                 position: absolute;
+                 top: 10px;
+                 right: 10px;
+                 width: 200px;
+                 text-align:center;
+                 padding: 5px;
+                 line-height: 150%;
+        }
+        </style>
+        <link rel="stylesheet" href="/static/css/leaflet.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/leaflet.ie.css" /><![endif]-->
+</head>
+<body>
+        <div id="map"></div>
+        <div id="box-status" class="box">
+                <h2>Scarlett & Mohit's Charity Jailbreak Tracker</h2>
+        </div>
+</body>
+    <script src="/static/js/leaflet.js"></script>
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script>
+        var map = L.map('map').setView([50.673, -1.286], 4);
+        var latest_id=-1;
+        var lastMarker;
+        var trackTail;
+    
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        sillyDragonIcon = L.icon({ iconUrl: '/static/images/sillyDragon.png' });
+        
+        function initData() {
+            $.ajax({
+		        url: "/data.php",
+		        type: "GET",
+		        dataType: 'json',
+		        success: function( data ) {
+			        if(data.length!=0) {
+			            console.log(data);
+			            setCurrentPos(data[data.length-1]);
+			            drawTail(data);
+			        }
+		        }
+	        });
+        }
+        
+        function refreshData() {
+            $.ajax({
+		        url: "/data.php",
+		        type: "GET",
+		        dataType: 'json',
+		        data: {
+		            since_id: latest_id
+		        },
+		        success: function( data ) {
+			        if(data.length!=0) {
+			            console.log(data);
+			        }
+		        }
+	        });
+        }
+        
+        function setCurrentPos(row) {
+            if(lastMarker) {
+                lastMarker.setLatLng([row['lat'],row['lon']]);
+                lastMarker.bindPopup("Updated: "+row['t']);
+                lastMarker.update();
+            } else {
+                lastMarker = L.marker([row['lat'],row['lon']], {
+                    title: "Scarlett & Mohit",
+                    icon: sillyDragonIcon
+                }).addTo(map);
+                lastMarker.bindPopup("Updated: "+row['t']);
+            }
+        }
+       
+        function drawTail(allRows) {
+            if(trackTail) {
+                var allLength = allRows.length,
+                for (var i=0; i<allLength; i++) {
+                    trackTail.addLatLng([allRows[i].lat, allRows[i].lon]);
+                }
+            } else {
+                var temp_latlngs = [];
+                for (var i=0; i<allLength; i++) {
+                    temp_latlngs.push([allRows[i].lat, allRows[i].lon]);
+                }
+                trackTail = L.polyline(temp_latlngs, {color: 'red'}).addTo(map);
+            }
+        }
+    </script>
+</html>
+
