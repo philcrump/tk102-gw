@@ -57,7 +57,11 @@
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
         
-        sillyDragonIcon = L.icon({ iconUrl: '/static/images/silly-dragon.png' });
+        sillyDragonIcon = L.icon({
+            iconUrl: '/static/images/silly-dragon.png',
+            iconSize:     [64, 64], // size of the icon
+            iconAnchor:   [32, 32], // point of the icon which will correspond to marker's location
+        });
         
         initData();
         setInterval(refreshData,5*1000); // Refresh Data every 30s
