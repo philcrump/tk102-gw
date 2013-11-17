@@ -129,7 +129,9 @@ tk102.parse = function( raw ) {
 	
 	    //Check GPS fix
 	    if(str[9]=="000000") { // date is blank, so no GPS
-	        return false;
+	        var gpsFix = false;
+	    } else {
+	        var gpsFix = true;
 	    }
 		
 		// parse
@@ -154,7 +156,8 @@ tk102.parse = function( raw ) {
 				'kmh':		Math.round( gpsPieces[4] * 1.852 * 1000 ) / 1000,
 				'mph':		Math.round( gpsPieces[4] * 1.151 * 1000 ) / 1000
 			},
-			'imei':		str[1]
+			'imei':		str[1],
+			'fix':      gpsFix
 		}
 	}
 	
