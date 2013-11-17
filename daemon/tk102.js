@@ -42,8 +42,8 @@ var tk102 = new EventEmitter()
 tk102.settings = {
 	ip:		'0.0.0.0',	// default listen on all IPs
 	port:		0,		// 0 = random, 'listening' event reports port
-	connections:	10,		// 10 simultaneous connections
-	timeout:	10		// 10 seconds idle timeout
+	connections:	3,		// 10 simultaneous connections
+	timeout:	3		// 10 seconds idle timeout
 }
 
 // Create server
