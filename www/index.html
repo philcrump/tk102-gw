@@ -93,6 +93,9 @@
 		        success: function( data ) {
 			        if(data.length!=0) {
 			            console.log(data);
+			            setCurrentPos(data[data.length-1]);
+			            drawTail(data);
+			            latest_id=data[data.length-1].id;
 			        }
 		        }
 	        });
