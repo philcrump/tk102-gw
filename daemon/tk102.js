@@ -79,6 +79,8 @@ tk102.createServer = function( vars ) {
 	
 	// inbound connection
 	tk102.server.on( 'connection', function( socket ) {
+	
+	    console.log("New Connection");
 		
 		tk102.emit( 'connection', socket )
 		socket.setEncoding( 'utf8' )
@@ -86,13 +88,14 @@ tk102.createServer = function( vars ) {
 		
 		// receiving data
 		socket.on( 'data', function( chunk ) {
+		    console.log("New Data");
 			tk102.emit( 'data', chunk )
 			data += chunk
 		})
 		
 		// complete
 		socket.on( 'close', function() {
-			
+			console.log("Closed connection, parsing..");
 			var gps = {}
 			gps = tk102.parse( data )
 			if( data != '' ) {
