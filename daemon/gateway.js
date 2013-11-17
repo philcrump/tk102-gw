@@ -1,18 +1,16 @@
-console.log("TK102B TCP GPRS Gateway v0.1-dev");
+console.log("TK102 TCP GPRS Gateway v0.1-dev");
 console.log("Loading...");
 
-var net = require('net');
+var tk102 = require('./tk102');
 
 var portNum = 5030;
 
-net.createServer(function (socket) { 
-    socket.on('data', function (data) {
-        console.log("Message received from "+socket.remoteAddress+": "+data);
-    });
+tk102.createServer({
+        port: portNum
+});
 
-    socket.on('end', function () {
-        console.log(socket.remoteAddress+" Disconnected.");
-    });
-}).listen(portNum);
+tk102.on('track', function(gps) {
+        console.log(gps);
+});
  
-console.log("TCP Server running on port "+portNum+"\n");
+console.log("TK102 Server running on port "+portNum);
