@@ -64,6 +64,7 @@ tk102.createServer = function( vars ) {
 			socket.setTimeout( tk102.settings.timeout * 1000, function() {
 				tk102.emit( 'timeout', socket )
 				socket.end()
+				socket.destroy()
 			})
 		}
 		
