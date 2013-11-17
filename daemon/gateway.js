@@ -27,21 +27,10 @@ tk102.on('track', function(gps) {
         
         var nuData  = {};
         nuData['time'] = gps.datetime;
-        nuData['gpstime'] = gps.gps.date+" "+gps.gps.time;
         nuData['latitude'] = gps.geo.latitude;
         nuData['longitude'] = gps.geo.longitude;
         nuData['bearing'] = gps.geo.bearing;
         nuData['speed'] = gps.speed.mph;
-        if(gps.gps.fix=='active') {
-            nuData['gpsFix'] = 1;
-        } else {
-            nuData['gpsFix'] = 0;
-        }
-        if(gps.gps.signal=='full') {
-            nuData['gpsSig'] = 1;
-        } else {
-            nuData['gpsSig'] = 0;
-        }
         nuData['raw'] = gps.raw;
         
         console.log(nuData);
