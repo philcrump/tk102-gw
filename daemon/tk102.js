@@ -126,6 +126,11 @@ tk102.parse = function( raw ) {
 	
 	// only continue with correct input, else the server may quit...
 	if( str.length == 13) {
+	
+	    //Check GPS fix
+	    if(str[9]=="000000") { // date is blank, so no GPS
+	        return false;
+	    }
 		
 		// parse
 		var datetime = str[9].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
