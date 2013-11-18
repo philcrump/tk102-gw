@@ -48,7 +48,7 @@
 		        dataType: 'json',
 		        success: function( data ) {
 			        if(data.length!=0) {
-			            console.log(data);
+			            console.table(data);
 			            setCurrentPos(data[data.length-1]);
 			            drawTail(data);
 			            latest_id=data[data.length-1].id;
@@ -68,7 +68,7 @@
 		        },
 		        success: function( data ) {
 			        if(data.length!=0) {
-			            console.log(data);
+			            console.table(data);
 			            setCurrentPos(data[data.length-1]);
 			            drawTail(data);
 			            latest_id=data[data.length-1].id;
