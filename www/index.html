@@ -117,8 +117,8 @@
         }
        
         function drawTail(allRows) {
+            var allLength = allRows.length;
             if(trackTail) {
-                var allLength = allRows.length;
                 for (var i=0; i<allLength; i++) {
                     trackTail.addLatLng([allRows[i].lat, allRows[i].lon]);
                 }
