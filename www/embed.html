@@ -82,14 +82,14 @@
             if(lastMarker) {
             	lastMarker.closePopup();
                 lastMarker.setLatLng([row['lat'],row['lon']]);
-                lastMarker.bindPopup("Updated: "+row['t']);
+                lastMarker.bindPopup("Updated: "+row['t']+"<br>Speed: "+Math.round(row['spd'])+" mph");
                 lastMarker.update();
             } else {
                 lastMarker = L.marker([row['lat'],row['lon']], {
                     title: "Scarlett & Mohit",
                     icon: sillyDragonIcon
                 }).addTo(map);
-                lastMarker.bindPopup("Updated: "+row['t']);
+                lastMarker.bindPopup("Updated: "+row['t']+"<br>Speed: "+Math.round(row['spd'])+" mph");
             }
             
         }
