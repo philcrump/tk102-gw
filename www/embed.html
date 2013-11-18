@@ -104,7 +104,7 @@
                 for (var i=0; i<allLength; i++) {
                     temp_latlngs.push(new L.LatLng(allRows[i].lat, allRows[i].lon));
                 }
-                trackTail = L.polyline(temp_latlngs, {color: 'red'}).addTo(map);
+                trackTail = L.polyline(temp_latlngs, {color: 'red', opacity: 0.8}).addTo(map);
             }
         }
     </script> 
