@@ -77,7 +77,7 @@
 			            setCurrentPos(data[data.length-1]);
 			            drawTail(data);
 			            latest_id=data[data.length-1].id;
-			            map.setView([data[data.length-1].lat,data[data.length-1].lon,12);
+			            map.setView([data[data.length-1].lat,data[data.length-1].lon],12);
 			        }
 		        }
 	        });
@@ -97,7 +97,7 @@
 			            setCurrentPos(data[data.length-1]);
 			            drawTail(data);
 			            latest_id=data[data.length-1].id;
-			            map.panTo([data[data.length-1].lat,data[data.length-1]);
+			            map.panTo([data[data.length-1].lat,data[data.length-1].lon]);
 			        }
 		        }
 	        });
