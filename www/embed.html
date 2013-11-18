@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body {
+                padding: 0;
+                margin: 0;
+        }
+        html, body, #map {
+                height: 100%;
+        }
+        </style>
+        <link rel="stylesheet" href="/static/css/leaflet.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/leaflet.ie.css" /><![endif]-->
+</head>
+<body>
+        <div id="map"></div>
+    <script src="/static/js/leaflet.js"></script>
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script>
+        var map = L.map('map').setView([50.673, -1.286], 4);
+        var latest_id=-1;
+        var lastMarker;
+        var trackTail;
+    
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        sillyDragonIcon = L.icon({
+            iconUrl: '/static/images/silly-dragon-map.ico',
+            iconSize:     [64, 64], // size of the icon
+            iconAnchor:   [32, 32], // point of the icon which will correspond to marker's location
+        });
+        
+        initData();
+        setInterval(refreshData,5*1000); // Refresh Data every 30s
+        
+        function initData() {
+            $.ajax({
+		        url: "/data.php",
+		        type: "GET",
+		        dataType: 'json',
+		        success: function( data ) {
+			        if(data.length!=0) {
+			            console.log(data);
+			            setCurrentPos(data[data.length-1]);
+			            drawTail(data);
+			            latest_id=data[data.length-1].id;
+			            map.setView([data[data.length-1].lat,data[data.length-1].lon],12);
+			        }
+		        }
+	        });
+        }
+        
+        function refreshData() {
+            $.ajax({
+		        url: "/data.php",
+		        type: "GET",
+		        dataType: 'json',
+		        data: {
+		            since_id: latest_id
+		        },
+		        success: function( data ) {
+			        if(data.length!=0) {
+			            console.log(data);
+			            setCurrentPos(data[data.length-1]);
+			            drawTail(data);
+			            latest_id=data[data.length-1].id;
+			            map.panTo([data[data.length-1].lat,data[data.length-1].lon]);
+			        }
+		        }
+	        });
+        }
+        
+        function setCurrentPos(row) {
+            if(lastMarker) {
+                lastMarker.setLatLng([row['lat'],row['lon']]);
+                lastMarker.bindPopup("Updated: "+row['t']);
+                lastMarker.update();
+            } else {
+                lastMarker = L.marker([row['lat'],row['lon']], {
+                    title: "Scarlett & Mohit",
+                    icon: sillyDragonIcon
+                }).addTo(map);
+                lastMarker.bindPopup("Updated: "+row['t']);
+            }
+            
+        }
+       
+        function drawTail(allRows) {
+            var allLength = allRows.length;
+            if(trackTail) {
+                for (var i=0; i<allLength; i++) {
+                    trackTail.addLatLng(new L.LatLng(allRows[i].lat, allRows[i].lon));
+                }
+            } else {
+                var temp_latlngs = [];
+                for (var i=0; i<allLength; i++) {
+                    temp_latlngs.push(new L.LatLng(allRows[i].lat, allRows[i].lon));
+                }
+                trackTail = L.polyline(temp_latlngs, {color: 'red'}).addTo(map);
+            }
+        }
+    </script> 
+</body>
+</html>
+
