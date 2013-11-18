@@ -126,6 +126,7 @@
         
         function setCurrentPos(row) {
             if(lastMarker) {
+            	lastMarker.closePopup();
                 lastMarker.setLatLng([row['lat'],row['lon']]);
                 lastMarker.bindPopup("Updated: "+row['t']);
                 lastMarker.update();
