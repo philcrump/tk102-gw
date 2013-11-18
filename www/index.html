@@ -113,6 +113,7 @@
                 }).addTo(map);
                 lastMarker.bindPopup("Updated: "+row['t']);
             }
+            map.setView([row['lat'],row['lon'],12);
             
         }
        
