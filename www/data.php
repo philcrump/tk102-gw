@@ -11,15 +11,21 @@ if(isset($_REQUEST["since_id"])) {
 	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing FROM positions;");
 }
 $data_stmt->execute();
-$data_stmt->bindColumn(1, $row['id']);
-$data_stmt->bindColumn(2, $row['t']);
-$data_stmt->bindColumn(3, $row['lat']);
-$data_stmt->bindColumn(4, $row['lon']);
-$data_stmt->bindColumn(5, $row['spd']);
-$data_stmt->bindColumn(6, $row['trk']);
+$data_stmt->bindColumn(1, $id);
+$data_stmt->bindColumn(2, $t);
+$data_stmt->bindColumn(3, $lat);
+$data_stmt->bindColumn(4, $lon);
+$data_stmt->bindColumn(5, $spd);
+$data_stmt->bindColumn(6, $trk);
 $output = array();
 while ($data_stmt->fetch()) {
-    array_push($output, $row);
+    $row['id']=$id;
+    $row['t']=$t;
+    $row['lat']=$lat;
+    $row['lon']=$lon;
+    $row['spd']=$spd;
+    $row['trk']=$trk;
+    $output[]=$row;
 }
 print json_encode($output);
 ?>
