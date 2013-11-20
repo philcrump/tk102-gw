@@ -104,11 +104,11 @@
 		                $("#lupdated").text(Math.round(((new Date())-latest_fix)/60000));
 		            }
 			        if(data[2].length!=0) {
-			            console.table(data);
-			            setCurrentPos(data[data.length-1]);
-			            drawTail(data);
-			            latest_id=data[data.length-1].id;
-			            map.setView([data[data.length-1].lat,data[data.length-1].lon],12);
+			            console.table(data[2]);
+			            setCurrentPos(data[2][data.length-1]);
+			            drawTail(data[2]);
+			            latest_id=data[2][data[2].length-1].id;
+			            map.setView([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon],12);
 			        }
 		        }
 	        });
@@ -124,11 +124,11 @@
 		        },
 		        success: function( data ) {
 			        if(data[2].length!=0) {
-			            console.table(data);
-			            setCurrentPos(data[data.length-1]);
-			            drawTail(data);
-			            latest_id=data[data.length-1].id;
-			            map.panTo([data[data.length-1].lat,data[data.length-1].lon]);
+			            console.table(data[2]);
+			            setCurrentPos(data[2][data[2].length-1]);
+			            drawTail(data[2]);
+			            latest_id=data[2][data[2].length-1].id;
+			            map.panTo([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon]);
 			        }
 		        }
 	        });
