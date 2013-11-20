@@ -95,13 +95,13 @@
 		        dataType: 'json',
 		        success: function( data ) {
 		            if(data[0].length!=0) { // Raised so far values
-		                $("#scarlettRaised").text(data[0][0]);
-		                $("#mohitRaised").text(data[0][1]);
-		                $("#sumRaised").text(data[0][0]+data[0][1]);
+		                $("#scarlettRaised").text(data[0][0].toFixed(2));
+		                $("#mohitRaised").text(data[0][1].toFixed(2));
+		                $("#sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
 		            }
 		            if(data[1].length!=0) { // Modem last updated
 		                latest_fix = new Date(data[1]);
-		                $("#lupdated").text(((new Date())-latest_fix)/60000);
+		                $("#lupdated").text(Math.round(((new Date())-latest_fix)/60000));
 		            }
 			        if(data[2].length!=0) {
 			            console.table(data);
