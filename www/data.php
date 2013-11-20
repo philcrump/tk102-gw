@@ -1,7 +1,24 @@
 <?php
+$imei = '353588020145956';
 $dbc = new PDO('mysql:host=localhost;dbname=tk102', 'tk102', 'SrL3M7RjdMAHTPtx', array(
     PDO::ATTR_PERSISTENT => true
 ));
+$json_output = array();
+
+$raised_file='../raise2give/raised.json'
+if(file_exists($raised_file)) {
+    $json_output[]=json_decode(file_get_contents($raised_file));
+} else {
+    $json_output[]=[];
+}
+
+$updated = $dbc->prepare("SELECT last_fix FROM modems WHERE imei=?;");
+$updated_stmt->bindValue(1, $imei);
+$updated_stmt->execute();
+$updated_stmt->bindColumn(1, $lfix);
+$updated_stmt->fetch()
+$json_output[]=$lfix;
+
 $output = array();
 $row = array();
 if(isset($_REQUEST["since_id"])) {
@@ -27,5 +44,6 @@ while ($data_stmt->fetch()) {
     $row['trk']=$trk;
     $output[]=$row;
 }
-print json_encode($output);
+$json_output[]=$output;
+print json_encode($json_output);
 ?>

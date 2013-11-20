@@ -28,7 +28,7 @@ tk102.on('track', function(gps) {
         modData['last_updated']=new Date();
         
         if(gps.fix) {
-            modData['fix_valid']=1;
+            modData['last_fix']=new Date();
             var posData = {};
             posData['time'] = gps.datetime;
             posData['latitude'] = gps.geo.latitude;
@@ -52,7 +52,6 @@ tk102.on('track', function(gps) {
                     });
             });
         } else { // No fix, but modem has checked in.
-            modData['fix_valid']=0;
             dbPool.getConnection(function(err, connection) {
                     if (err) throw err;
                     connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
