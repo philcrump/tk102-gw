@@ -1,5 +1,6 @@
 <?php
-$imei = '353588020145956';
+//$imei = '353588020145956';
+$imei = '013227007777968';
 $dbc = new PDO('mysql:host=localhost;dbname=tk102', 'tk102', 'SrL3M7RjdMAHTPtx', array(
     PDO::ATTR_PERSISTENT => true
 ));
