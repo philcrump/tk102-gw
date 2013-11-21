@@ -120,8 +120,6 @@ tk102.parse = function( raw ) {
 	var raw = raw.trim()
 	var data = false
 	
-	console.log(raw);
-	
 	// Check for fake (delimiter: #)
 	if(raw.split('#').length == 13) {
 	    var str = raw.split('#');
