@@ -178,17 +178,15 @@ tk102.parse = function( raw ) {
 		})
 		
 		var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
-			return hour +':'+ minute +':'+ second +'.'+ ms
+			return hour +':'+ minute +':'+ second
 		})
 		
 		data = {
 		    'model':    'tk102-2',
 			'raw':		raw,
-			'datetime':	datetime,
+			'datetime':	gpsdate+' '+gpstime,
 			'phone':	str[1],
 			'gps': {
-				'date':		gpsdate,
-				'time':		gpstime,
 				'signal':	str[15] == 'F' ? 1 : 0,
 				'fix':		str[4] == 'A' ? true : false,
 				'sats':     parseInt(str[18])
@@ -196,6 +194,7 @@ tk102.parse = function( raw ) {
 			'geo': {
 				'latitude':	tk102.fixGeo( str[5], str[6] ),
 				'longitude':	tk102.fixGeo( str[7], str[8] ),
+				'altitude':     parseFloat( str[19] ),
 				'bearing':		parseInt( str[10] )
 			},
 			'speed': {
@@ -213,7 +212,7 @@ tk102.parse = function( raw ) {
 			    'lac':  str[26],
 			    'cell': str[27],
 			},
-			'imei':		str[16].replace( 'imei:', '' )
+			'imei':		str[17].replace( 'imei:', '' )
 		}
 	}
 	
