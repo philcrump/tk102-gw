@@ -105,7 +105,7 @@
 		            }
 			        if(data[2].length!=0) {
 			            console.table(data[2]);
-			            setCurrentPos(data[2][data.length-1]);
+			            setCurrentPos(data[2][data[2].length-1]);
 			            drawTail(data[2]);
 			            latest_id=data[2][data[2].length-1].id;
 			            map.setView([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon],12);
