@@ -58,9 +58,22 @@
                  font-family: Helvetica,"Lucida Grande",Verdana,Arial;
                  font-size: 12px;
         }
+        #box-tech-status {
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            width: 300px;
+            height: 200px;
+            //margin-left: -200px;
+            //margin-top: -50px;
+            padding: 1em;
+            display: none;
+            font-family: Helvetica,"Lucida Grande",Verdana,Arial;
+            font-size: 12px;
+        }
         .leaflet-tile-container img {
-		-webkit-backface-visibility: hidden;
-	}
+		    -webkit-backface-visibility: hidden;
+	    }
         </style>
         <link rel="stylesheet" href="/static/css/leaflet.css" />
         <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/leaflet.ie.css" /><![endif]-->
@@ -80,14 +93,20 @@
                 <li><b>Current Total Raised: £<span class="sumRaised"></span></b></li>
                 </ul>
                 </ul>
-                Position last updated <span class="lupdated"></span>.
+                Position last updated <span class="lupdated"></span>.&nbsp;<a href="#" class="technical_show">Technical Info</a>
         </div>
         <div id="box-mobile-status" class="box">
-                <h2 style="text-align:center;">Scarlett and Mohit Jail Break<br>Live Tracking Map</h1>
+                <h2 style="text-align:center;">Scarlett and Mohit Jail Break<br>Live Tracking Map</h2>
                 <ul>
                 <li><b>Current Total Raised: £<span class="sumRaised"></span></b></li>
                 </ul>
                 Position last updated <span class="lupdated"></span>.
+        </div>
+        <div id="box-tech-status" class="box">
+                <h4 style="text-align:center;">Device Status</h4>
+                <b>GPS Signal: <span class="signal"></span> (<span class="sats"></span> sats)</b><br>
+                <b>Battery: <span class="battv"></span>V</b><br><br>
+                <a href="#" class="technical_hide" style="text-align:center;">Close</a>
         </div>
     <script src="/static/js/leaflet.js"></script>
     <script src="/static/js/moment.min.js"></script>
@@ -118,6 +137,14 @@
             $("#box-mobile-status").show();
         }
         
+        $('.technical_show').click(function() {
+            $("#box-tech-status").show();
+        });
+        
+        $('.technical_hide').click(function() {
+            $("#box-tech-status").hide();
+        });
+        
         function initData() {
             $.ajax({
 		        url: "/data.php",
@@ -138,6 +165,9 @@
 			            drawTail(data[2]);
 			            latest_id=data[2][data[2].length-1].id;
 			            map.setView([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon],12);
+			            $(".signal").text([data[2][data[2].length-1].sig);
+			            $(".sats").text([data[2][data[2].length-1].sat);
+			            $(".battv").text([data[2][data[2].length-1].bat);
 			        }
 		        }
 	        });
@@ -166,6 +196,9 @@
 			            drawTail(data[2]);
 			            latest_id=data[2][data[2].length-1].id;
 			            map.panTo([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon]);
+			            $(".signal").text([data[2][data[2].length-1].sig);
+			            $(".sats").text([data[2][data[2].length-1].sat);
+			            $(".battv").text([data[2][data[2].length-1].bat);
 			        }
 		        }
 	        });

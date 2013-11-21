@@ -23,10 +23,10 @@ $json_output[]=$lfix;
 $output = array();
 $row = array();
 if(isset($_REQUEST["since_id"])) {
-	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing FROM nupositions WHERE id>?;");
+	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing,battery,sig,sats FROM nupositions WHERE id>?;");
 	$data_stmt->bindValue(1, $_REQUEST["since_id"], PDO::PARAM_INT);
 } else {
-	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing FROM nupositions;");
+	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing,battery,sig,sats FROM nupositions;");
 }
 $data_stmt->execute();
 $data_stmt->bindColumn(1, $id);
@@ -35,6 +35,9 @@ $data_stmt->bindColumn(3, $lat);
 $data_stmt->bindColumn(4, $lon);
 $data_stmt->bindColumn(5, $spd);
 $data_stmt->bindColumn(6, $trk);
+$data_stmt->bindColumn(7, $bat);
+$data_stmt->bindColumn(8, $sig);
+$data_stmt->bindColumn(9, $sat);
 $output = array();
 while ($data_stmt->fetch()) {
     $row['id']=$id;
@@ -43,6 +46,9 @@ while ($data_stmt->fetch()) {
     $row['lon']=$lon;
     $row['spd']=$spd;
     $row['trk']=$trk;
+    $row['bat']=$bat;
+    $row['sig']=$sig;
+    $row['sat']=$sat;
     $output[]=$row;
 }
 $json_output[]=$output;
