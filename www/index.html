@@ -75,20 +75,20 @@
                 <li><b>Read more on <a href="http://www.dottyprojects.com/southampton-jail-break-2013/" target="_blank">Scarlett's Blog</a>!</b></li>
                 <li><b>Sponsor them on Raise2Give!</b></li>
                 <ul>
-                <li><b><a href="https://www.raise2give.com/jail-break-southampton/scarlett-theron-rush" target="_blank">Scarlett's Page</a></b>&nbsp;-&nbsp;Currently £<span id="scarlettRaised"></span> Raised</li>
-                <li><b><a href="https://www.raise2give.com/jail-break-southampton/mohit-gupta" target="_blank">Mohit's Page</a></b>&nbsp;-&nbsp;Currently £<span id="mohitRaised"></span> Raised</li>
-                <li><b>Current Total Raised: £<span id="sumRaised"></span></b></li>
+                <li><b><a href="https://www.raise2give.com/jail-break-southampton/scarlett-theron-rush" target="_blank">Scarlett's Page</a></b>&nbsp;-&nbsp;Currently £<span class="scarlettRaised"></span> Raised</li>
+                <li><b><a href="https://www.raise2give.com/jail-break-southampton/mohit-gupta" target="_blank">Mohit's Page</a></b>&nbsp;-&nbsp;Currently £<span class="mohitRaised"></span> Raised</li>
+                <li><b>Current Total Raised: £<span class="sumRaised"></span></b></li>
                 </ul>
                 </ul>
-                Position last updated <span id="lupdated"></span>.
+                Position last updated <span class="lupdated"></span>.
         </div>
         <div id="box-mobile-status" class="box">
                 <h2 style="text-align:center;">Jail Break Live Tracking Map</h1>
                 <h2 style="text-align:center;">Scarlett and Mohit</h2>
                 <ul>
-                <li><b>Current Total Raised: £<span id="sumRaised"></span></b></li>
+                <li><b>Current Total Raised: £<span class="sumRaised"></span></b></li>
                 </ul>
-                Position last updated <span id="lupdated"></span>.
+                Position last updated <span class="lupdated"></span>.
         </div>
     <script src="/static/js/leaflet.js"></script>
     <script src="/static/js/moment.min.js"></script>
@@ -126,12 +126,12 @@
 		        dataType: 'json',
 		        success: function( data ) {
 		            if(data[0].length!=0) { // Raised so far values
-		                $("#scarlettRaised").text(data[0][0].toFixed(2));
-		                $("#mohitRaised").text(data[0][1].toFixed(2));
-		                $("#sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
+		                $(".scarlettRaised").text(data[0][0].toFixed(2));
+		                $(".mohitRaised").text(data[0][1].toFixed(2));
+		                $(".sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
 		            }
 		            if(data[1].length!=0) { // Modem last updated
-		                $("#lupdated").text(moment(data[1], "YYYY-MM-DD HH:mm:ss").fromNow());
+		                $(".lupdated").text(moment(data[1], "YYYY-MM-DD HH:mm:ss").fromNow());
 		            }
 			        if(data[2].length!=0) {
 			            console.table(data[2]);
@@ -154,12 +154,12 @@
 		        },
 		        success: function( data ) {
 		            if(data[0].length!=0) { // Raised so far values
-		                $("#scarlettRaised").text(data[0][0].toFixed(2));
-		                $("#mohitRaised").text(data[0][1].toFixed(2));
-		                $("#sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
+		                $(".scarlettRaised").text(data[0][0].toFixed(2));
+		                $(".mohitRaised").text(data[0][1].toFixed(2));
+		                $(".sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
 		            }
 		            if(data[1].length!=0) { // Modem last updated
-		                $("#lupdated").text(moment(data[1], "YYYY-MM-DD HH:mm:ss").fromNow());
+		                $(".lupdated").text(moment(data[1], "YYYY-MM-DD HH:mm:ss").fromNow());
 		            }
 			        if(data[2].length!=0) {
 			            console.table(data[2]);
