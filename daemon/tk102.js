@@ -43,7 +43,7 @@ tk102.settings = {
 	ip:		'0.0.0.0',	// default listen on all IPs
 	port:		0,		// 0 = random, 'listening' event reports port
 	connections:	3,		// 10 simultaneous connections
-	timeout:	3		// 10 seconds idle timeout
+	timeout:	5		// 10 seconds idle timeout
 }
 
 // Create server
@@ -89,10 +89,6 @@ tk102.createServer = function( vars ) {
 		socket.on( 'data', function( chunk ) {
 			tk102.emit( 'data', chunk )
 			data += chunk
-		})
-		
-		// complete
-		socket.on( 'close', function() {
 			
 			var gps = {}
 			gps = tk102.parse( data )
@@ -108,9 +104,7 @@ tk102.createServer = function( vars ) {
 					})
 				}
 			}
-			
 		})
-		
 	})
 }
 
