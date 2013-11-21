@@ -206,6 +206,7 @@ tk102.parse = function( raw ) {
 			'device': {
 			    'battv':    parseFloat(str[20].substr(2,4)),
 			    'charging': parseInt(str[21])
+			},
 			'gsm': {
 			    'mcc':  str[24],
 			    'mnc':  str[25],
