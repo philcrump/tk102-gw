@@ -212,7 +212,7 @@ tk102.parse = function( raw ) {
 			    'lac':  str[26],
 			    'cell': str[27],
 			},
-			'imei':		str[17].replace( 'imei:', '' )
+			'imei':		str[17].replace( ' imei:', '' )
 		}
 	}
 	

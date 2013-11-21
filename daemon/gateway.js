@@ -65,7 +65,7 @@ tk102.on('track', function(gps) {
         
         } else if(gps.model=='tk102-2') {
         
-            if(gps.fix) {
+            if(gps.gps.fix) {
                 modData['last_fix']=new Date();
                 var posData = {};
                 posData['time'] = gps.datetime;
