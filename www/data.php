@@ -13,12 +13,13 @@ if(file_exists($raised_file)) {
     $json_output[]=[];
 }
 
-$updated_stmt = $dbc->prepare("SELECT last_fix FROM modems WHERE imei=?;");
+$updated_stmt = $dbc->prepare("SELECT last_fix,last_updated FROM modems WHERE imei=?;");
 $updated_stmt->bindValue(1, $imei);
 $updated_stmt->execute();
 $updated_stmt->bindColumn(1, $lfix);
+$updated_stmt->bindColumn(2, $lupd);
 $updated_stmt->fetch();
-$json_output[]=$lfix;
+$json_output[]=[$lfix, $lupd];
 
 $output = array();
 $row = array();

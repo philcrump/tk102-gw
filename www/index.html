@@ -104,8 +104,9 @@
         </div>
         <div id="box-tech-status" class="box">
                 <h2 style="text-align:center;">Device Status</h2>
+				<b>Modem last checked in <span class="dupdated"></span>.</b><br>
                 <b>GPS Signal: <span class="signal"></span> (<span class="sats"></span> sats)</b><br>
-                <b>Battery: <span class="battv"></span>V</b><br><br>
+                <b>Battery: <span class="battv"></span>V</b><br>
                 Tracking is using a <a href="https://www.philcrump.co.uk/TK-102_GSM_Tracker" target="_blank">TK-102 GSM Tracker</a>.<br>
                 <a href="#" class="technical_hide" style="text-align:center;">Close</a>
         </div>
@@ -161,7 +162,8 @@
 		                $(".sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
 		            }
 		            if(data[1].length!=0) { // Modem last updated
-		                $(".lupdated").text(moment(data[1], "YYYY-MM-DD HH:mm:ss").fromNow());
+		                $(".lupdated").text(moment(data[1][0], "YYYY-MM-DD HH:mm:ss").fromNow());
+						$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 		            }
 			        if(data[2].length!=0) {
 			            console.table(data[2]);
@@ -196,7 +198,8 @@
 		                $(".sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
 		            }
 		            if(data[1].length!=0) { // Modem last updated
-		                $(".lupdated").text(moment(data[1], "YYYY-MM-DD HH:mm:ss").fromNow());
+		                $(".lupdated").text(moment(data[1][0], "YYYY-MM-DD HH:mm:ss").fromNow());
+						$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 		            }
 			        if(data[2].length!=0) {
 			            console.table(data[2]);
