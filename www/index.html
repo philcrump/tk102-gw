@@ -77,6 +77,14 @@
         </style>
         <link rel="stylesheet" href="/static/css/leaflet.css" />
         <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/leaflet.ie.css" /><![endif]-->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-45391003-2', 'dottyprojects.com');
+          ga('send', 'pageview');
+        </script>
 </head>
 <body>
         <div id="map"></div>
@@ -249,7 +257,7 @@
                 trackTail = L.polyline(temp_latlngs, {color: 'red', opacity: 0.8}).addTo(map);
             }
         }
-    </script> 
+    </script>
 </body>
 </html>
 
