@@ -166,7 +166,11 @@
 			            drawTail(data[2]);
 			            latest_id=data[2][data[2].length-1].id;
 			            map.setView([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon],12);
-			            $(".signal").text(data[2][data[2].length-1].sig);
+			            if(data[2][data[2].length-1].sig==1) {
+			                $(".signal").text('High');
+			            } else {
+			                $(".signal").text('Low');
+			            }
 			            $(".sats").text(data[2][data[2].length-1].sat);
 			            $(".battv").text(data[2][data[2].length-1].bat);
 			        }
@@ -197,7 +201,11 @@
 			            drawTail(data[2]);
 			            latest_id=data[2][data[2].length-1].id;
 			            map.panTo([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon]);
-			            $(".signal").text(data[2][data[2].length-1].sig);
+			            if(data[2][data[2].length-1].sig==1) {
+			                $(".signal").text('High');
+			            } else {
+			                $(".signal").text('Low');
+			            }
 			            $(".sats").text(data[2][data[2].length-1].sat);
 			            $(".battv").text(data[2][data[2].length-1].bat);
 			        }
