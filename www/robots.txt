@@ -1,0 +1,3 @@
+Sitemap: http://jailbreak.dottyprojects.com/sitemap.xml
+User-agent: *
+Disallow:
