@@ -196,9 +196,9 @@
 			            drawTail(data[2]);
 			            latest_id=data[2][data[2].length-1].id;
 			            map.panTo([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon]);
-			            $(".signal").text([data[2][data[2].length-1].sig);
-			            $(".sats").text([data[2][data[2].length-1].sat);
-			            $(".battv").text([data[2][data[2].length-1].bat);
+			            $(".signal").text(data[2][data[2].length-1].sig);
+			            $(".sats").text(data[2][data[2].length-1].sat);
+			            $(".battv").text(data[2][data[2].length-1].bat);
 			        }
 		        }
 	        });
