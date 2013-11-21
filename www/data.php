@@ -23,10 +23,10 @@ $json_output[]=$lfix;
 $output = array();
 $row = array();
 if(isset($_REQUEST["since_id"])) {
-	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing FROM positions WHERE id>?;");
+	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing FROM nupositions WHERE id>?;");
 	$data_stmt->bindValue(1, $_REQUEST["since_id"], PDO::PARAM_INT);
 } else {
-	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing FROM positions;");
+	$data_stmt = $dbc->prepare("SELECT id,time,latitude,longitude,speed,bearing FROM nupositions;");
 }
 $data_stmt->execute();
 $data_stmt->bindColumn(1, $id);
