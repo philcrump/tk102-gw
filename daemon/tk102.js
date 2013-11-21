@@ -118,7 +118,7 @@ tk102.createServer = function( vars ) {
 tk102.parse = function( raw ) {
 	
 	// Genuine:
-	// 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
+	// 131121130211,+447743336864,GPRMC,120211.883,A,5056.3263,N,00123.8814,W,1.03,225.04,211113,,,A*7B,L,, imei:013227007777968,04,40.8,F:4.25V,0,140,36565,234,10,4BB6,374C
 	// Fake:
 	// #353588020145956##1#0000#AUT#01#2340104bb6374c#00000.0000,E,0000.0000,N,0.00,0.00#000000#000000.000##".
 	// #353588020145956##1#0000#AUT#01#2340104bb6374c#123.854500,W,5056.346600,N,0.00,0.00#171113#205016.000##
@@ -153,8 +153,8 @@ tk102.parse = function( raw ) {
 			'raw':		raw,
 			'datetime':	datetime,
 			'geo': {
-				'latitude':	tk102.fixGeo( gpsPieces[2], gpsPieces[3] ),
-				'longitude':	tk102.fixGeo( gpsPieces[0], gpsPieces[1] ),
+				'latitude':	tk102.fixFakeGeo( gpsPieces[2], gpsPieces[3] ),
+				'longitude':	tk102.fixFakeGeo( gpsPieces[0], gpsPieces[1] ),
 				'bearing':		parseInt( gpsPieces[5] )
 			},
 			'speed': {
@@ -165,7 +165,7 @@ tk102.parse = function( raw ) {
 			'imei':		str[1],
 			'fix':      gpsFix
 		}
-	} else if(raw.split(',').length == 18) { // Check for genuine (delimiter: ,)
+	} else if(raw.split(',').length == 28) { // Check for genuine (delimiter: ,)
 	    var str = raw.split(',');
 	    
 	    // parse
@@ -189,8 +189,9 @@ tk102.parse = function( raw ) {
 			'gps': {
 				'date':		gpsdate,
 				'time':		gpstime,
-				'signal':	str[15] == 'F' ? 'full' : 'low',
-				'fix':		str[4] == 'A' ? true : false
+				'signal':	str[15] == 'F' ? 1 : 0,
+				'fix':		str[4] == 'A' ? true : false,
+				'sats':     parseInt(str[18])
 			},
 			'geo': {
 				'latitude':	tk102.fixGeo( str[5], str[6] ),
@@ -202,6 +203,15 @@ tk102.parse = function( raw ) {
 				'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
 				'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000
 			},
+			'device': {
+			    'battv':    parseFloat(str[20].substr(2,4)),
+			    'charging': parseInt(str[21])
+			'gsm': {
+			    'mcc':  str[24],
+			    'mnc':  str[25],
+			    'lac':  str[26],
+			    'cell': str[27],
+			},
 			'imei':		str[16].replace( 'imei:', '' )
 		}
 	}
@@ -212,6 +222,15 @@ tk102.parse = function( raw ) {
 
 // Clean geo positions, with 6 decimals
 tk102.fixGeo = function( one, two ) {
+	var minutes = one.substr(-7, 7)
+	var degrees = parseInt( one.replace( minutes, '' ), 10 )
+	var one = degrees + (minutes / 60)
+
+	var one = parseFloat( (two == 'S' || two == 'W' ? '-' : '') + one )
+	return Math.round( one * 1000000 ) / 1000000
+}
+
+tk102.fixFakeGeo = function( one, two ) {
 	var minutes = one.substr(-9, 9)
 	var degrees = parseInt( one.replace( minutes, '' ), 10 )
 	var one = degrees + (minutes / 60)
