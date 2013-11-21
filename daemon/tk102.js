@@ -117,15 +117,20 @@ tk102.createServer = function( vars ) {
 // Parse GPRMC string
 tk102.parse = function( raw ) {
 	
+	// Genuine:
 	// 1203292316,0031698765432,GPRMC,211657.000,A,5213.0247,N,00516.7757,E,0.00,273.30,290312,,,A*62,F,imei:123456789012345,123
+	// Fake:
 	// #353588020145956##1#0000#AUT#01#2340104bb6374c#00000.0000,E,0000.0000,N,0.00,0.00#000000#000000.000##".
 	// #353588020145956##1#0000#AUT#01#2340104bb6374c#123.854500,W,5056.346600,N,0.00,0.00#171113#205016.000##
+	
 	var raw = raw.trim()
-	var str = raw.split('#')
 	var data = false
 	
-	// only continue with correct input, else the server may quit...
-	if( str.length == 13) {
+	console.log(raw);
+	
+	// Check for fake (delimiter: #)
+	if(raw.split('#').length == 13) {
+	    var str = raw.split('#');
 	
 	    //Check GPS fix
 	    if(str[9]=="000000") { // date is blank, so no GPS
@@ -144,6 +149,7 @@ tk102.parse = function( raw ) {
 		var gpsPieces = str[8].split(',')
 		
 		data = {
+		    'model':    'clone1',
 			'raw':		raw,
 			'datetime':	datetime,
 			'geo': {
@@ -158,6 +164,45 @@ tk102.parse = function( raw ) {
 			},
 			'imei':		str[1],
 			'fix':      gpsFix
+		}
+	} else if(raw.split(',').length == 18) { // Check for genuine (delimiter: ,)
+	    var str = raw.split(',');
+	    
+	    // parse
+		var datetime = str[0].replace( /([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, year, month, day, hour, minute ) {
+			return '20'+ year +'-'+ month +'-'+ day +' '+ hour +':'+ minute
+		})
+		
+		var gpsdate = str[11].replace( /([0-9]{2})([0-9]{2})([0-9]{2})/, function( match, day, month, year ) {
+			return '20'+ year +'-'+ month +'-'+ day
+		})
+		
+		var gpstime = str[3].replace( /([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{3})/, function( match, hour, minute, second, ms ) {
+			return hour +':'+ minute +':'+ second +'.'+ ms
+		})
+		
+		data = {
+		    'model':    'tk102-2',
+			'raw':		raw,
+			'datetime':	datetime,
+			'phone':	str[1],
+			'gps': {
+				'date':		gpsdate,
+				'time':		gpstime,
+				'signal':	str[15] == 'F' ? 'full' : 'low',
+				'fix':		str[4] == 'A' ? true : false
+			},
+			'geo': {
+				'latitude':	tk102.fixGeo( str[5], str[6] ),
+				'longitude':	tk102.fixGeo( str[7], str[8] ),
+				'bearing':		parseInt( str[10] )
+			},
+			'speed': {
+				'knots':	Math.round( str[9] * 1000 ) / 1000,
+				'kmh':		Math.round( str[9] * 1.852 * 1000 ) / 1000,
+				'mph':		Math.round( str[9] * 1.151 * 1000 ) / 1000
+			},
+			'imei':		str[16].replace( 'imei:', '' )
 		}
 	}
 	

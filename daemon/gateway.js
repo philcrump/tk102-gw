@@ -27,6 +27,8 @@ tk102.on('track', function(gps) {
         var modData = {};
         modData['last_updated']=new Date();
         
+        if(gps.model=='clone1') {
+        
         if(gps.fix) {
             modData['last_fix']=new Date();
             var posData = {};
@@ -59,6 +61,10 @@ tk102.on('track', function(gps) {
                             connection.release();
                     });
             });
+        }
+        
+        } else if(gps.model=='tk102-2') {
+        
         }
 });
  
