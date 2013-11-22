@@ -26,12 +26,9 @@ if($soses!=0) {
 ?>
 <h1 style="color: red;"><?php print $soses; ?> SOS MESSAGES SENT, LAST AT:</h1>
 <h2 style="color: red;"><?php print $sostime; ?></h2>
-<object type="audio/x-mp3" data="/static/klaxon.mp3" width="320" height="50">
-<param name="autostart" value="true" />
-<param name="loop" value="true" />
-<param name="controller" value="true" />
-<param name="src" value="/static/klaxon.mp3">
-</object>
+<audio controls loop>
+    <source src="/static/klaxon.mp3" type="audio/mpeg">
+</audio>
 <script>
 setTimeout(function() {alert("Scarlett SOS Message Received!");},2000);
 </script>
