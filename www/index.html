@@ -265,6 +265,7 @@
             trackTail = L.polyline(temp_latlngs, {color: 'red', opacity: 0.8}).addTo(map);
         }
     }
+    setInterval(function() { ga('send', 'event', 'hb', 'keepalive'); },3*60*1000);
 </script>
 </body>
 </html>
