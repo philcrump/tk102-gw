@@ -77,11 +77,13 @@ tk102.on('track', function(gps) {
                 posData['sats'] = gps.gps.sats;
                 posData['sig'] = gps.gps.signal;
                 posData['battery'] = gps.device.battv;
+                posData['battstatus'] = gps.device.battstatus;
                 posData['charging'] = gps.device.charging;
                 posData['MCC'] = gps.gsm.mcc;
                 posData['MNC'] = gps.gsm.mnc;
                 posData['LAC'] = gps.gsm.lac;
                 posData['Cell'] = gps.gsm.cell;
+                posData['sos'] = gps.sos;
                 posData['raw'] = gps.raw;
                 
                 dbPool.getConnection(function(err, connection) {
