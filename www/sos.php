@@ -24,12 +24,12 @@ while ($data_stmt->fetch()) {
 <?php
 if($soses!=0) {
 ?>
-<h1 style="font-color: red;"><?php print $soses; ?> SOS MESSAGES SENT, LAST AT:</h1>
-<h2 style="font-color: red;"><?php print $sostime; ?></h2>
+<h1 style="color: red;"><?php print $soses; ?> SOS MESSAGES SENT, LAST AT:</h1>
+<h2 style="color: red;"><?php print $sostime; ?></h2>
 <?php
 } else {
 ?>
-<h1 style="font-color: green;">Scarlett seems ok :)</h1>
+<h1 style="color: green;">Scarlett seems ok :)</h1>
 <?php
 }
 ?>
