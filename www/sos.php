@@ -26,7 +26,7 @@ if($soses!=0) {
 ?>
 <h1 style="color: red;"><?php print $soses; ?> SOS MESSAGES SENT, LAST AT:</h1>
 <h2 style="color: red;"><?php print $sostime; ?></h2>
-<audio controls loop>
+<audio autoplay controls loop>
     <source src="/static/klaxon.mp3" type="audio/mpeg">
 </audio>
 <script>
