@@ -19,9 +19,6 @@ while ($data_stmt->fetch()) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <title>Live Jailbreak SOS</title>
-<script>
-setTimeout(function() { location.reload(true); },30*1000);
-</script>
 </head>
 <body>
 <?php
@@ -41,6 +38,9 @@ setTimeout(function() {alert("Scarlett SOS Message Received!");},2000);
 } else {
 ?>
 <h1 style="color: green;">Scarlett seems ok :)</h1>
+<script>
+setTimeout(function() { location.reload(true); },10*1000);
+</script>
 <?php
 }
 ?>
