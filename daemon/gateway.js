@@ -27,38 +27,89 @@ tk102.on('track', function(gps) {
         var modData = {};
         modData['last_updated']=new Date();
         
-        if(gps.fix) {
-            modData['last_fix']=new Date();
-            var posData = {};
-            posData['time'] = gps.datetime;
-            posData['latitude'] = gps.geo.latitude;
-            posData['longitude'] = gps.geo.longitude;
-            posData['bearing'] = gps.geo.bearing;
-            posData['speed'] = gps.speed.mph;
-            posData['raw'] = gps.raw;
-            
-            dbPool.getConnection(function(err, connection) {
-                    if (err) throw err;
-                    connection.query('INSERT INTO positions SET ?', posData, function(err, rows, fields) {
-                            if (err) throw err;
-                            connection.release();
-                    });
-            });
-            dbPool.getConnection(function(err, connection) {
-                    if (err) throw err;
-                    connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
-                            if (err) throw err;
-                            connection.release();
-                    });
-            });
-        } else { // No fix, but modem has checked in.
-            dbPool.getConnection(function(err, connection) {
-                    if (err) throw err;
-                    connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
-                            if (err) throw err;
-                            connection.release();
-                    });
-            });
+        if(gps.model=='clone1') {
+        
+            if(gps.fix) {
+                modData['last_fix']=new Date();
+                var posData = {};
+                posData['time'] = gps.datetime;
+                posData['latitude'] = gps.geo.latitude;
+                posData['longitude'] = gps.geo.longitude;
+                posData['bearing'] = gps.geo.bearing;
+                posData['speed'] = gps.speed.mph;
+                posData['raw'] = gps.raw;
+                
+                dbPool.getConnection(function(err, connection) {
+                        if (err) throw err;
+                        connection.query('INSERT INTO positions SET ?', posData, function(err, rows, fields) {
+                                if (err) throw err;
+                                connection.release();
+                        });
+                });
+                dbPool.getConnection(function(err, connection) {
+                        if (err) throw err;
+                        connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
+                                if (err) throw err;
+                                connection.release();
+                        });
+                });
+            } else { // No fix, but modem has checked in.
+                dbPool.getConnection(function(err, connection) {
+                        if (err) throw err;
+                        connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
+                                if (err) throw err;
+                                connection.release();
+                        });
+                });
+            }
+        
+        } else if(gps.model=='tk102-2') {
+        
+            if(gps.gps.fix) {
+                modData['last_fix']=gps.datetime;
+                var posData = {};
+                posData['time'] = gps.datetime;
+                posData['latitude'] = gps.geo.latitude;
+                posData['longitude'] = gps.geo.longitude;
+                posData['bearing'] = gps.geo.bearing;
+                posData['speed'] = gps.speed.mph;
+                posData['altitude'] = gps.geo.altitude;
+                posData['sats'] = gps.gps.sats;
+                posData['sig'] = gps.gps.signal;
+                posData['battery'] = gps.device.battv;
+                posData['battstatus'] = gps.device.battstatus;
+                posData['charging'] = gps.device.charging;
+                posData['MCC'] = gps.gsm.mcc;
+                posData['MNC'] = gps.gsm.mnc;
+                posData['LAC'] = gps.gsm.lac;
+                posData['Cell'] = gps.gsm.cell;
+                posData['sos'] = gps.sos;
+                posData['raw'] = gps.raw;
+                
+                dbPool.getConnection(function(err, connection) {
+                        if (err) throw err;
+                        connection.query('INSERT INTO nupositions SET ?', posData, function(err, rows, fields) {
+                                if (err) throw err;
+                                connection.release();
+                        });
+                });
+                dbPool.getConnection(function(err, connection) {
+                        if (err) throw err;
+                        connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
+                                if (err) throw err;
+                                connection.release();
+                        });
+                });
+            } else { // No fix, but modem has checked in.
+                dbPool.getConnection(function(err, connection) {
+                        if (err) throw err;
+                        connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
+                                if (err) throw err;
+                                connection.release();
+                        });
+                });
+            }
+        
         }
 });
  
