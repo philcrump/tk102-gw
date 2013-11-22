@@ -113,8 +113,8 @@
     <div id="box-tech-status" class="box">
             <h2 style="text-align:center;">Device Status</h2>
 			<b>Modem last checked in <span class="dupdated"></span>.</b><br>
-            <b>GPS Signal: <span class="signal"></span> (<span class="sats"></span> sats)</b><br>
-            <b>Battery: <span class="battv"></span>V</b><br>
+            <b>GPS Signal: <span class="signal"></span> (<span class="sats"></span> satellites)</b><br>
+            <b>Battery: <span class="battst"></span> (<span class="battv"></span>V)</b><br>
             Tracking is using a <a href="https://www.philcrump.co.uk/TK-102_GSM_Tracker" target="_blank">TK-102 GSM Tracker</a>.<br>
             <a href="#" class="technical_hide" style="text-align:center;">Close</a>
     </div>
@@ -185,6 +185,11 @@
 		                $(".signal").text('Low');
 		            }
 		            $(".sats").text(data[2][data[2].length-1].sat);
+		            if(data[2][data[2].length-1].bst==1) {
+		                $(".battst").text('Full');
+		            } else {
+		                $(".battst").text('Low');
+		            }
 		            $(".battv").text(data[2][data[2].length-1].bat);
 		        }
 	        }
@@ -221,6 +226,11 @@
 		                $(".signal").text('Low');
 		            }
 		            $(".sats").text(data[2][data[2].length-1].sat);
+		            if(data[2][data[2].length-1].bst==1) {
+		                $(".battst").text('Full');
+		            } else {
+		                $(".battst").text('Low');
+		            }
 		            $(".battv").text(data[2][data[2].length-1].bat);
 		        }
 	        }
