@@ -99,6 +99,9 @@
             <li><b><a href="https://www.raise2give.com/jail-break-southampton/scarlett-theron-rush" target="_blank">Scarlett's Page</a></b>&nbsp;-&nbsp;Currently £<span class="scarlettRaised"></span> Raised</li>
             <li><b><a href="https://www.raise2give.com/jail-break-southampton/mohit-gupta" target="_blank">Mohit's Page</a></b>&nbsp;-&nbsp;Currently £<span class="mohitRaised"></span> Raised</li>
             <li><b>Current Total Raised: £<span class="sumRaised"></span></b></li>
+            <ul>
+            <li>Help us get to £<span class="newTarget"></span> please!</li>
+            </ul>
             </ul>
             </ul>
             Position last updated <span class="lupdated"></span>.&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="technical_show">Technical Info</a>
@@ -168,7 +171,9 @@
 	            if(data[0].length!=0) { // Raised so far values
 	                $(".scarlettRaised").text(data[0][0].toFixed(2));
 	                $(".mohitRaised").text(data[0][1].toFixed(2));
-	                $(".sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
+	                var sumTotal=(data[0][0]+data[0][1]);
+	                $(".sumRaised").text(sumTotal.toFixed(2));
+	                $(".newTarget").text((Math.floor(sumTotal/100)*100)+100);
 	            }
 	            if(data[1].length!=0) { // Modem last updated
 	                $(".lupdated").text(moment(data[1][0], "YYYY-MM-DD HH:mm:ss").fromNow());
