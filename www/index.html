@@ -174,7 +174,6 @@
 					$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 	            }
 		        if(data[2].length!=0) {
-		            console.table(data[2]);
 		            setCurrentPos(data[2][data[2].length-1]);
 		            drawTail(data[2]);
 		            latest_id=data[2][data[2].length-1].id;
@@ -215,7 +214,6 @@
 					$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 	            }
 		        if(data[2].length!=0) {
-		            console.table(data[2]);
 		            setCurrentPos(data[2][data[2].length-1]);
 		            drawTail(data[2]);
 		            latest_id=data[2][data[2].length-1].id;
