@@ -35,7 +35,7 @@ if($soses!=0) {
 <param name="src" value="/static/klaxon.mp3">
 </object>
 <script>
-alert("SOS Message Received!");
+setTimeout(function() {alert("Scarlett SOS Message Received!");},2000);
 </script>
 <?php
 } else {
