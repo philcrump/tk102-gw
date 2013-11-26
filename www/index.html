@@ -130,26 +130,26 @@
 	        dataType: 'json',
 	        success: function( data ) {
 	            if(data[0].length!=0) { // Modem last updated
-	                $(".lupdated").text(moment(data[1][0], "YYYY-MM-DD HH:mm:ss").fromNow());
-					$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
+	                $(".lupdated").text(moment(data[0][0], "YYYY-MM-DD HH:mm:ss").fromNow());
+					$(".dupdated").text(moment(data[0][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 	            }
 		        if(data[1].length!=0) {
-		            setCurrentPos(data[2][data[2].length-1]);
-		            drawTail(data[2]);
-		            latest_id=data[2][data[2].length-1].id;
-		            map.setView([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon],12);
-		            if(data[2][data[2].length-1].sig==1) {
+		            setCurrentPos(data[1][data[2].length-1]);
+		            drawTail(data[1]);
+		            latest_id=data[1][data[1].length-1].id;
+		            map.setView([data[1][data[1].length-1].lat,data[1][data[1].length-1].lon],12);
+		            if(data[1][data[1].length-1].sig==1) {
 		                $(".signal").text('High');
 		            } else {
 		                $(".signal").text('Low');
 		            }
-		            $(".sats").text(data[2][data[2].length-1].sat);
-		            if(data[2][data[2].length-1].bst==1) {
+		            $(".sats").text(data[1][data[1].length-1].sat);
+		            if(data[1][data[1].length-1].bst==1) {
 		                $(".battst").text('OK');
 		            } else {
 		                $(".battst").text('Low');
 		            }
-		            $(".battv").text(data[2][data[2].length-1].bat);
+		            $(".battv").text(data[1][data[1].length-1].bat);
 		        }
 	        }
         });
@@ -165,26 +165,26 @@
 	        },
 	        success: function( data ) {
 	            if(data[0].length!=0) { // Modem last updated
-	                $(".lupdated").text(moment(data[1][0], "YYYY-MM-DD HH:mm:ss").fromNow());
-					$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
+	                $(".lupdated").text(moment(data[0][0], "YYYY-MM-DD HH:mm:ss").fromNow());
+					$(".dupdated").text(moment(data[0][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 	            }
 		        if(data[1].length!=0) {
-		            setCurrentPos(data[2][data[2].length-1]);
-		            drawTail(data[2]);
-		            latest_id=data[2][data[2].length-1].id;
-		            map.panTo([data[2][data[2].length-1].lat,data[2][data[2].length-1].lon]);
-		            if(data[2][data[2].length-1].sig==1) {
+		            setCurrentPos(data[1][data[1].length-1]);
+		            drawTail(data[1]);
+		            latest_id=data[1][data[1].length-1].id;
+		            map.panTo([data[1][data[1].length-1].lat,data[1][data[1].length-1].lon]);
+		            if(data[1][data[1].length-1].sig==1) {
 		                $(".signal").text('High');
 		            } else {
 		                $(".signal").text('Low');
 		            }
-		            $(".sats").text(data[2][data[2].length-1].sat);
-		            if(data[2][data[2].length-1].bst==1) {
+		            $(".sats").text(data[1][data[1].length-1].sat);
+		            if(data[1][data[1].length-1].bst==1) {
 		                $(".battst").text('OK');
 		            } else {
 		                $(".battst").text('Low');
 		            }
-		            $(".battv").text(data[2][data[2].length-1].bat);
+		            $(".battv").text(data[1][data[1].length-1].bat);
 		        }
 	        }
         });
