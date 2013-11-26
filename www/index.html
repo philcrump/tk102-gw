@@ -101,13 +101,13 @@
     var trackTail;
 	var refreshInterval=5;
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    });
     
     var ggl = new L.Google();
     var ggl2 = new L.Google('TERRAIN');
-    //map.addLayer(ggl);
+    map.addLayer(osm);
     map.addControl(new L.Control.Layers( {'OSM':osm, 'Google':ggl, 'Google Terrain':ggl2}, {}));
     
     initData();
