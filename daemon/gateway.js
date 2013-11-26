@@ -3,6 +3,7 @@ console.log("Loading...");
 
 var tk102 = require('./tk102');
 var mysql = require('mysql');
+var http = require('http');
 
 var portNum = 5030;
 
@@ -86,6 +87,7 @@ tk102.on('track', function(gps) {
                 posData['sos'] = gps.sos;
                 posData['raw'] = gps.raw;
                 
+                // Insert Position Data
                 dbPool.getConnection(function(err, connection) {
                         if (err) throw err;
                         connection.query('INSERT INTO nupositions SET ?', posData, function(err, rows, fields) {
@@ -93,11 +95,68 @@ tk102.on('track', function(gps) {
                                 connection.release();
                         });
                 });
+                // Update last_fix
                 dbPool.getConnection(function(err, connection) {
                         if (err) throw err;
                         connection.query('UPDATE modems SET ? WHERE imei=?', [modData,gps.imei], function(err, rows, fields) {
                                 if (err) throw err;
                                 connection.release();
+                        });
+                });
+                // Check for chasecar enabled
+                dbPool.getConnection(function(err, connection) {
+                        if (err) throw err;
+                        connection.query('SELECT chaseCar from WHERE imei=?', [gps.imei], function(err, rows, fields) {
+                                if (err) throw err;
+                                connection.release();
+                                if(rows[0].chaseCar==1) {
+                                    var uuidReq = http.request({
+                                        host: 'habitat.habhub.org',
+                                        path: '/_uuids',
+                                        method: 'GET'
+                                    }, function (response) {
+                                          var str = ''
+                                          response.on('data', function (chunk) {
+                                            str += chunk;
+                                          });
+
+                                          response.on('end', function () {
+                                            var body = JSON.stringify({
+                                                '_id' : str,
+                                                'type': "listener_telemetry",
+                                                'time_created': (new Date(gps.datetime)).toISOString(),
+                                                'time_uploaded': (new Date()).toISOString(),
+                                                'data': {
+                                                    'callsign': 'GSM',
+                                                    'chase': true,
+                                                    'latitude': gps.geo.latitude,
+                                                    'longitude': gps.geo.longitude,
+                                                    'altitude': gps.geo.altitude,
+                                                    'speed': gps.speed.mph,
+                                                    'client': {
+                                                        'name': 'GSM Tracker Gateway',
+                                                        'version': '0.1b',
+                                                        'agent': 'TK102-2'
+                                                    }
+                                                }
+                                            });
+                                            var docReq = http.request({
+                                                host: 'habitat.habhub.org',
+                                                path: '/habitat',
+                                                method: 'POST',
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                    "Content-Length": body.length
+                                                }
+                                            });
+                                            docReq.write(body);
+                                            docReq.end();
+                                            });
+                                        });
+                                    uuidReq.write("count=1");
+                                    uuidReq.end();
+                                }
+                                
                         });
                 });
             } else { // No fix, but modem has checked in.
