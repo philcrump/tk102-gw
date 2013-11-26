@@ -106,7 +106,7 @@ tk102.on('track', function(gps) {
                 // Check for chasecar enabled
                 dbPool.getConnection(function(err, connection) {
                         if (err) throw err;
-                        connection.query('SELECT chaseCar from WHERE imei=?', [gps.imei], function(err, rows, fields) {
+                        connection.query('SELECT chaseCar from modems WHERE imei=?', gps.imei, function(err, rows, fields) {
                                 if (err) throw err;
                                 connection.release();
                                 if(rows[0].chaseCar==1) {
