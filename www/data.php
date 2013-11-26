@@ -6,13 +6,6 @@ $dbc = new PDO('mysql:host=localhost;dbname=tk102', 'tk102', 'SrL3M7RjdMAHTPtx',
 ));
 $json_output = array();
 
-$raised_file='../raise2give/raised.json';
-if(file_exists($raised_file)) {
-    $json_output[]=json_decode(file_get_contents($raised_file));
-} else {
-    $json_output[]=[];
-}
-
 $updated_stmt = $dbc->prepare("SELECT last_fix,last_updated FROM modems WHERE imei=?;");
 $updated_stmt->bindValue(1, $imei);
 $updated_stmt->execute();

@@ -2,11 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Live Jailbreak Tracker</title>
+<title>GSM Tracker Map</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="shortcut icon" href="/static/images/silly-dragon-favicon.ico">
-<meta name="Description" content="Scarlett & Mohit's Live Jailbreak Tracker">
-<meta name="Keywords" content="jailbreak,jail,break,soton,southampton,uni,enactus,tracker,map,progress,updates,live,scarlett,mohit,charity,blog">
 <style>
     body {
             padding: 0;
@@ -77,41 +74,15 @@
 </style>
 <link rel="stylesheet" href="/static/css/leaflet.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/leaflet.ie.css" /><![endif]-->
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-45391003-2', 'dottyprojects.com');
-    ga('send', 'pageview');
-</script>
 </head>
 <body>
     <div id="map"></div>
     <div id="box-status" class="box">
-            <h1 style="text-align:center;">Jail Break Live Tracking Map</h1>
-            <h2 style="text-align:center;">Scarlett and Mohit are doing a Jail-Break from Southampton Uni to raise money for <a href="http://www.sifesouthampton.com/" target="_blank">Enactus</a>!</h2>
-            <ul style="line-height: 1.8em;">
-            <li>Starting on 22nd November at 6pm, the idea is to get as far away from Southampton as possible in 36 hours without spending any money!</li>
-            <li><b>Read more on <a href="http://www.dottyprojects.com/" target="_blank">Scarlett's Blog</a>!</b></li>
-            <li><b>Sponsor them on Raise2Give!</b></li>
-            <ul>
-            <li><b><a href="https://www.raise2give.com/jail-break-southampton/scarlett-theron-rush" target="_blank">Scarlett's Page</a></b>&nbsp;-&nbsp;Currently £<span class="scarlettRaised"></span> Raised</li>
-            <li><b><a href="https://www.raise2give.com/jail-break-southampton/mohit-gupta" target="_blank">Mohit's Page</a></b>&nbsp;-&nbsp;Currently £<span class="mohitRaised"></span> Raised</li>
-            <li><b>Current Total Raised: £<span class="sumRaised"></span></b></li>
-            <ul>
-            <li>Help us get to £<span class="newTarget"></span>!</li>
-            </ul>
-            </ul>
-            </ul>
+            <h1 style="text-align:center;">Live GSM Tracker Map</h1>
             Position last updated <span class="lupdated"></span>.&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="technical_show">Technical Info</a>
     </div>
     <div id="box-mobile-status" class="box">
-            <h2 style="text-align:center;">Scarlett and Mohit Jail Break<br>Live Tracking Map</h2>
-            <ul>
-            <li><b>More info at <a href="http://www.dottyprojects.com/" target="_blank">Scarlett's Blog</a></b></li>
-            <li><b>Current Total Raised: £<span class="sumRaised"></span></b></li>
-            </ul>
+            <h2 style="text-align:center;">GSM Tracker Map</h2>
             Position last updated <span class="lupdated"></span>.
     </div>
     <div id="box-tech-status" class="box">
@@ -135,12 +106,6 @@
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    
-    sillyDragonIcon = L.icon({
-        iconUrl: '/static/images/silly-dragon-map.ico',
-        iconSize:     [64, 64], // size of the icon
-        iconAnchor:   [32, 32], // point of the icon which will correspond to marker's location
-    });
     
     initData();
     
@@ -168,18 +133,11 @@
 	        type: "GET",
 	        dataType: 'json',
 	        success: function( data ) {
-	            if(data[0].length!=0) { // Raised so far values
-	                $(".scarlettRaised").text(data[0][0].toFixed(2));
-	                $(".mohitRaised").text(data[0][1].toFixed(2));
-	                var sumTotal=(data[0][0]+data[0][1]);
-	                $(".sumRaised").text(sumTotal.toFixed(2));
-	                $(".newTarget").text((Math.floor(sumTotal/100)*100)+100);
-	            }
-	            if(data[1].length!=0) { // Modem last updated
+	            if(data[0].length!=0) { // Modem last updated
 	                $(".lupdated").text(moment(data[1][0], "YYYY-MM-DD HH:mm:ss").fromNow());
 					$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 	            }
-		        if(data[2].length!=0) {
+		        if(data[1].length!=0) {
 		            setCurrentPos(data[2][data[2].length-1]);
 		            drawTail(data[2]);
 		            latest_id=data[2][data[2].length-1].id;
@@ -210,16 +168,11 @@
 	            since_id: latest_id
 	        },
 	        success: function( data ) {
-	            if(data[0].length!=0) { // Raised so far values
-	                $(".scarlettRaised").text(data[0][0].toFixed(2));
-	                $(".mohitRaised").text(data[0][1].toFixed(2));
-	                $(".sumRaised").text((data[0][0]+data[0][1]).toFixed(2));
-	            }
-	            if(data[1].length!=0) { // Modem last updated
+	            if(data[0].length!=0) { // Modem last updated
 	                $(".lupdated").text(moment(data[1][0], "YYYY-MM-DD HH:mm:ss").fromNow());
 					$(".dupdated").text(moment(data[1][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 	            }
-		        if(data[2].length!=0) {
+		        if(data[1].length!=0) {
 		            setCurrentPos(data[2][data[2].length-1]);
 		            drawTail(data[2]);
 		            latest_id=data[2][data[2].length-1].id;
@@ -249,8 +202,7 @@
             lastMarker.update();
         } else {
             lastMarker = L.marker([row['lat'],row['lon']], {
-                title: "Scarlett & Mohit",
-                icon: sillyDragonIcon
+                title: "Tracker 1"
             }).addTo(map);
             lastMarker.bindPopup("Updated: "+row['t']+"<br>Speed: "+Math.round(row['spd'])+" mph");
         }
