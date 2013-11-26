@@ -132,7 +132,7 @@ tk102.on('track', function(gps) {
                                                     'latitude': gps.geo.latitude,
                                                     'longitude': gps.geo.longitude,
                                                     'altitude': gps.geo.altitude,
-                                                    'speed': gps.speed.mph,
+                                                    'speed': Math.round(gps.speed.mph/2.24),
                                                     'client': {
                                                         'name': 'GSM Tracker Gateway',
                                                         'version': '0.1b',
