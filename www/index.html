@@ -134,7 +134,7 @@
 					$(".dupdated").text(moment(data[0][1], "YYYY-MM-DD HH:mm:ss").fromNow());
 	            }
 		        if(data[1].length!=0) {
-		            setCurrentPos(data[1][data[2].length-1]);
+		            setCurrentPos(data[1][data[1].length-1]);
 		            drawTail(data[1]);
 		            latest_id=data[1][data[1].length-1].id;
 		            map.setView([data[1][data[1].length-1].lat,data[1][data[1].length-1].lon],12);
