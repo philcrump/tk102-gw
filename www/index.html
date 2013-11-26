@@ -69,7 +69,7 @@
         line-height: 1.8em;
     }
 </style>
-<link rel="stylesheet" href="/static/css/leaflet.css" />
+<link rel="stylesheet" href="static/css/leaflet.css" />
 </head>
 <body>
     <div id="map"></div>
@@ -89,9 +89,9 @@
             Tracking is using a <a href="https://www.philcrump.co.uk/TK-102_GSM_Tracker" target="_blank">TK-102 GSM Tracker</a>.<br>
             <a href="#" class="technical_hide" style="text-align:center;">Close</a>
     </div>
-<script src="/static/js/leaflet.js"></script>
-<script src="/static/js/moment.min.js"></script>
-<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="static/js/leaflet.js"></script>
+<script src="static/js/moment.min.js"></script>
+<script src="static/js/jquery-1.10.2.min.js"></script>
 <script>
     var map = L.map('map').setView([50.673, -1.286], 4);
     var latest_id=-1;
@@ -125,7 +125,7 @@
     
     function initData() {
         $.ajax({
-	        url: "/data.php",
+	        url: "data.php",
 	        type: "GET",
 	        dataType: 'json',
 	        success: function( data ) {
@@ -157,7 +157,7 @@
     
     function refreshData() {
         $.ajax({
-	        url: "/data.php",
+	        url: "data.php",
 	        type: "GET",
 	        dataType: 'json',
 	        data: {
